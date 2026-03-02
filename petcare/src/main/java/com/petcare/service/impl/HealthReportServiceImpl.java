@@ -23,8 +23,7 @@ public class HealthReportServiceImpl implements HealthReportService {
     private final PetRepository petRepository;
 
     @Override
-    public HealthReportResponse addReport(@NonNull Long petId,
-                                          @NonNull HealthReportRequest request) {
+    public HealthReportResponse addReport(Long petId, HealthReportRequest request) {
 
         Pet pet = petRepository.findById(petId)
                 .orElseThrow(() -> new RuntimeException("Pet not found"));
@@ -34,6 +33,12 @@ public class HealthReportServiceImpl implements HealthReportService {
                 .weight(request.getWeight())
                 .temperature(request.getTemperature())
                 .heartRate(request.getHeartRate())
+                .medicalReport(request.getMedicalReport())
+                .lifestyleNutrition(request.getLifestyleNutrition())
+                .preventiveCare(request.getPreventiveCare())
+                .behaviorWellbeing(request.getBehaviorWellbeing())
+                .emergencyInfo(request.getEmergencyInfo())
+                .advancedMetrics(request.getAdvancedMetrics())
                 .notes(request.getNotes())
                 .pet(pet)
                 .build();
@@ -44,17 +49,18 @@ public class HealthReportServiceImpl implements HealthReportService {
     }
 
     @Override
-    public List<HealthReportResponse> getReports(@NonNull Long petId) {
+    public List<HealthReportResponse> getReports(Long petId) {
 
-        List<HealthReport> reports = healthReportRepository.findByPetId(petId);
+        List<HealthReport> reports =
+                healthReportRepository.findByPetIdOrderByReportDateAsc(petId);
 
         return reports.stream()
                 .map(this::mapToResponse)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
-    public HealthReportResponse getReportById(@NonNull Long reportId) {
+    public HealthReportResponse getReportById(Long reportId) {
 
         HealthReport report = healthReportRepository.findById(reportId)
                 .orElseThrow(() -> new RuntimeException("Health report not found"));
@@ -63,7 +69,7 @@ public class HealthReportServiceImpl implements HealthReportService {
     }
 
     @Override
-    public void deleteReport(@NonNull Long reportId) {
+    public void deleteReport(Long reportId) {
 
         HealthReport report = healthReportRepository.findById(reportId)
                 .orElseThrow(() -> new RuntimeException("Health report not found"));
@@ -71,7 +77,6 @@ public class HealthReportServiceImpl implements HealthReportService {
         healthReportRepository.delete(report);
     }
 
-    // Mapping method
     private HealthReportResponse mapToResponse(HealthReport report) {
 
         return HealthReportResponse.builder()
@@ -80,6 +85,12 @@ public class HealthReportServiceImpl implements HealthReportService {
                 .weight(report.getWeight())
                 .temperature(report.getTemperature())
                 .heartRate(report.getHeartRate())
+                .medicalReport(report.getMedicalReport())
+                .lifestyleNutrition(report.getLifestyleNutrition())
+                .preventiveCare(report.getPreventiveCare())
+                .behaviorWellbeing(report.getBehaviorWellbeing())
+                .emergencyInfo(report.getEmergencyInfo())
+                .advancedMetrics(report.getAdvancedMetrics())
                 .notes(report.getNotes())
                 .petId(report.getPet().getId())
                 .build();

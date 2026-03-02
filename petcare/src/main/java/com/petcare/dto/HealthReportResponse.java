@@ -2,17 +2,13 @@ package com.petcare.dto;
 
 import java.time.LocalDate;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class HealthReportResponse {
 
     private Long id;
@@ -20,6 +16,15 @@ public class HealthReportResponse {
     private Double weight;
     private Double temperature;
     private Integer heartRate;
+
+    private String medicalReport;
+    private String lifestyleNutrition;
+    private String preventiveCare;
+    private String behaviorWellbeing;
+    private String emergencyInfo;
+    private String advancedMetrics;
+
     private String notes;
+
     private Long petId;
 }

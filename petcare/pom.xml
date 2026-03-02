@@ -86,7 +86,18 @@
             <version>1.18.32</version>
             <scope>provided</scope>
         </dependency>
+        <!-- 🔥 PDF GENERATION (iText 7) -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>kernel</artifactId>
+            <version>7.2.5</version>
+        </dependency>
 
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>layout</artifactId>
+            <version>7.2.5</version>
+        </dependency>
         <!-- DevTools -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

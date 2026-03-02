@@ -25,7 +25,10 @@ public class AuthService {
     public String register(RegisterRequest request) {
 
         User user = new User();
-        user.setName(request.getName());
+
+        // 🔥 FIXED LINE
+        user.setUsername(request.getUsername());
+
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setRole("USER");
